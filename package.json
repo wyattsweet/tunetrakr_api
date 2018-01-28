@@ -1,0 +1,27 @@
+{
+  "name": "tunetrakr_api",
+  "version": "1.0.0",
+  "description": "The API code for tunetrakr",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon public/index.js",
+    "compile:scripts": "babel scripts --out-dir=src --presets=babel-preset-env",
+    "compile": "babel src --out-dir public --presets=babel-preset-env",
+    "createTables": "node public/scripts/createDBTables"
+  },
+  "author": "Wyatt Sweet",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "faker": "^4.1.0",
+    "nodemon": "^1.14.11"
+  }
+}

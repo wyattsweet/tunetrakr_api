@@ -1,0 +1,6 @@
+{
+  "ignore": ["public/*"],
+  "events": {
+    "restart": "npm run compile" 
+  }
+}
