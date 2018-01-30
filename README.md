@@ -13,3 +13,7 @@
 |password|`varchar(60) not null`|bcrypt passwords are always 60 chars|
 
 *Note:* Must add citext module to database before using. Access database from within the PostgreSQL shell prompt and run `CREATE EXTENSION citext;`. Then create the table.
+
+## Commands
+Generate prive key `ssh-keygen -t rsa -b 4096 -f jwtRS256.key`
+Don't use a passphrase

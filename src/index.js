@@ -1,7 +1,9 @@
-import express from 'express'
-import path from 'path'
 import bcrypt from 'bcrypt'
 import bodyParser from 'body-parser'
+import express from 'express'
+import fs from 'fs'
+import jwt from 'jsonwebtoken'
+import path from 'path'
 
 import UsersApi from './UsersApi'
 
@@ -17,11 +19,14 @@ app.use(bodyParser.json())
 
 app.post('/api/v1/user', (req, res) => {
   const reqData = req.body
-  // create a user
-  // hash password
   bcrypt.hash(reqData.password, 10).then(hash => {
-    // save stuff to db
-    usersApi.createUser(reqData.email, String(hash))
+    usersApi.createUser(reqData.email, String(hash)).then(data => {
+      const cert = fs.readFileSync('jwtRS256.key', 'utf8')
+      const token = jwt.sign({sub: 1, email: 'joe@shmo.com'}, cert, {
+        algorithm: 'RS256',
+      })
+      res.send(token)
+    })
   })
 })
 

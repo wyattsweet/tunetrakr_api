@@ -26,31 +26,16 @@ var UsersApi = function () {
 
     // TODO: rewrite this as a promise
     value: function createUser(email, password) {
-      pool.connect(function (err, client, release) {
-        if (err) {
-          client.release();
-          console.log(err);
-        }
-        var queryText = 'INSERT INTO users(email, password) VALUES ($1, $2) RETURNING *';
-        var values = [email, password];
-        var query = client.query(queryText, values, function (err, result) {
-          if (err) {
-            console.error(err.stack);
-          } else {
-            console.log(result.rows);
-          }
+      return new Promise(function (res, rej) {
+        pool.connect().then(function (client) {
+          var queryText = 'INSERT INTO users(email, password) VALUES ($1, $2) RETURNING *';
+          var values = [email, password];
+          return client.query(queryText, values).then(function (data) {
+            client.release();
+            res(JSON.stringify(data.rows));
+          });
         });
       });
-
-      //      .then(client => {
-      //          email,
-      //          password,
-      //        ])
-      //      })
-      //      .then(res => {
-      //        client.release()
-      //        console.log(res)
-      //      })
     }
   }]);
 

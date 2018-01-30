@@ -9,32 +9,17 @@ const pool = new Pool({
 class UsersApi {
   // TODO: rewrite this as a promise
   createUser(email, password) {
-    pool.connect((err, client, release) => {
-      if (err) {
-        client.release()
-        console.log(err)
-      }
-      const queryText =
-        'INSERT INTO users(email, password) VALUES ($1, $2) RETURNING *'
-      const values = [email, password]
-      const query = client.query(queryText, values, (err, result) => {
-        if (err) {
-          console.error(err.stack)
-        } else {
-          console.log(result.rows)
-        }
+    return new Promise((res, rej) => {
+      pool.connect().then(client => {
+        const queryText =
+          'INSERT INTO users(email, password) VALUES ($1, $2) RETURNING *'
+        const values = [email, password]
+        return client.query(queryText, values).then(data => {
+          client.release()
+          res(JSON.stringify(data.rows))
+        })
       })
     })
-
-    //      .then(client => {
-    //          email,
-    //          password,
-    //        ])
-    //      })
-    //      .then(res => {
-    //        client.release()
-    //        console.log(res)
-    //      })
   }
 }
 
