@@ -50,7 +50,8 @@ var asyncMiddleware = function asyncMiddleware(fn) {
 
 app.post('/api/v1/user', asyncMiddleware(function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var reqData, hash, userData, cert, token;
+    var reqData, hash, userData, _JSON$parse$, email, id, cert, token;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -66,10 +67,9 @@ app.post('/api/v1/user', asyncMiddleware(function () {
 
           case 6:
             userData = _context.sent;
-
-            console.log(userData);
+            _JSON$parse$ = JSON.parse(userData)[0], email = _JSON$parse$.email, id = _JSON$parse$.id;
             cert = _fs2.default.readFileSync('jwtRS256.key', 'utf8');
-            token = _jsonwebtoken2.default.sign({ sub: 1, email: 'joe@shmo.com' }, cert, {
+            token = _jsonwebtoken2.default.sign({ sub: id, email: email }, cert, {
               algorithm: 'RS256'
             });
 

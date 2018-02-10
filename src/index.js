@@ -26,9 +26,9 @@ app.post(
     const reqData = req.body
     const hash = await bcrypt.hash(reqData.password, 10)
     const userData = await usersApi.createUser(reqData.email, String(hash))
-    console.log(userData)
+    const {email, id} = JSON.parse(userData)[0]
     const cert = fs.readFileSync('jwtRS256.key', 'utf8')
-    const token = jwt.sign({sub: 1, email: 'joe@shmo.com'}, cert, {
+    const token = jwt.sign({sub: id, email}, cert, {
       algorithm: 'RS256'
     })
     res.send(token)
