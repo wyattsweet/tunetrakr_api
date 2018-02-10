@@ -23,7 +23,7 @@ app.post('/api/v1/user', (req, res) => {
     usersApi.createUser(reqData.email, String(hash)).then(data => {
       const cert = fs.readFileSync('jwtRS256.key', 'utf8')
       const token = jwt.sign({sub: 1, email: 'joe@shmo.com'}, cert, {
-        algorithm: 'RS256',
+        algorithm: 'RS256'
       })
       res.send(token)
     })
