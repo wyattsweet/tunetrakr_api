@@ -1,5 +1,9 @@
 # TuneTrakr API
 
+Rest API for TuneTrakr. Built with Node, Express and PostgreSQL.
+
+You can disregard everything below.
+
 ## Database Design
 
 **users table**
